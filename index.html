@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ulang Tahun & 2 Tahun Pertemanan">
+  <title>2 Tahun Pertemanan Kita</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Pacifico&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #ffffff;
+      --accent-color: #d4af37;
+      --accent-glow: rgba(212, 175, 55, 0.4);
+      --dark-bg: #050505;
+      --card-bg: rgba(20, 20, 20, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-shine: rgba(255, 255, 255, 0.05);
+      --env-base: #1a1a1a;
+      --env-shadow: #2a2a2a;
+      --letter-paper: #fdfbf7;
+      --gradient-bg: linear-gradient(-45deg, #0a0a0a, #111111, #1a1a1a, #000000);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--dark-bg);
+      background-image: var(--gradient-bg);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: var(--primary-color);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1, h2, h3 { font-weight: 700; letter-spacing: -0.5px; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { display: block; }
+
+    .progress-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 4px;
+      background: transparent; z-index: 1001;
+    }
+    .progress-bar {
+      height: 4px; background: var(--accent-color); width: 0%;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+    .text-accent { color: var(--accent-color); }
+
+    .glass-panel {
+      background: var(--glass-shine);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* ========================================
+       LOADING SCREEN - CINEMATIC EDITION
+       ======================================== */
+    #preloader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #000; z-index: 9999;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      transition: opacity 0.8s ease;
+      overflow: hidden;
+    }
+
+    /* Latar belakang partikel halus di preloader */
+    .preloader-bg-particles {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      overflow: hidden; pointer-events: none;
+    }
+    .preloader-bg-particles span {
+      position: absolute; width: 2px; height: 2px;
+      background: rgba(212, 175, 55, 0.3); border-radius: 50%;
+      animation: preloaderFloat linear infinite;
+    }
+    @keyframes preloaderFloat {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* Garis dekoratif atas */
+    .preloader-line {
+      width: 60px; height: 1px; background: var(--accent-color);
+      margin-bottom: 40px; opacity: 0;
+      animation: preloaderFadeIn 0.6s ease 0.3s forwards;
+    }
+
+    /* Teks utama preloader */
+    .preloader-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; color: #fff;
+      letter-spacing: 4px; text-transform: uppercase;
+      opacity: 0; transform: translateY(15px);
+      animation: preloaderSlideUp 0.8s ease 0.5s forwards;
+    }
+
+    /* Subtitle */
+    .preloader-subtitle {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem; color: #666;
+      letter-spacing: 6px; text-transform: uppercase;
+      margin-top: 12px; opacity: 0;
+      animation: preloaderSlideUp 0.8s ease 0.8s forwards;
+    }
+
+    /* Progress bar di loading screen */
+    .preloader-progress-wrapper {
+      margin-top: 50px; width: 200px; opacity: 0;
+      animation: preloaderSlideUp 0.8s ease 1s forwards;
+    }
+    .preloader-progress-track {
+      width: 100%; height: 1px; background: rgba(255,255,255,0.1);
+      position: relative; overflow: hidden;
+    }
+    .preloader-progress-fill {
+      position: absolute; top: 0; left: 0; height: 100%;
+      width: 0%; background: var(--accent-color);
+      transition: width 0.1s linear;
+    }
+    .preloader-percent {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.7rem; color: #555; letter-spacing: 3px;
+      text-align: center; margin-top: 12px;
+    }
+
+    /* Garis bawah */
+    .preloader-line-bottom {
+      width: 60px; height: 1px; background: var(--accent-color);
+      margin-top: 40px; opacity: 0;
+      animation: preloaderFadeIn 0.6s ease 1.2s forwards;
+    }
+
+    @keyframes preloaderSlideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes preloaderFadeIn {
+      to { opacity: 1; }
+    }
+
+    /* Class untuk memulai progress */
+    #preloader.loading-started .preloader-progress-fill {
+      width: 100%; transition: width 2.5s ease-in-out;
+    }
+
+    /* Class fadeout */
+    #preloader.fade-out {
+      opacity: 0; pointer-events: none;
+    }
+
+    /* ========================================
+       NAVBAR
+       ======================================== */
+    header {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(15px);
+      padding: 15px 0; border-bottom: 1px solid var(--glass-border);
+      z-index: 1000; transition: all 0.3s;
+    }
+    .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+    .logo {
+      font-family: 'Pacifico', cursive; font-size: 1.6rem;
+      background: linear-gradient(to right, #fff, #aaa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 35px; }
+    .nav-links a {
+      font-weight: 500; font-size: 0.95rem; color: #ccc;
+      transition: 0.3s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -5px; left: 0;
+      width: 0; height: 2px; background: var(--accent-color); transition: width 0.3s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ========================================
+       HERO / PROFIL SECTION
+       ======================================== */
+    .hero {
+      min-height: 100vh; display: flex; justify-content: center; align-items: center;
+      text-align: center; position: relative; padding-top: 80px; overflow: hidden;
+    }
+    .particles {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 1; pointer-events: none; opacity: 0.3;
+    }
+
+    .hero-content { z-index: 2; position: relative; }
+
+    /* Profil Card */
+    .profile-card {
+      display: inline-block; text-align: center;
+      padding: 50px 60px 40px;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      max-width: 420px; width: 100%;
+    }
+
+    .hero-photo-wrapper {
+      width: 140px; height: 140px; border-radius: 50%; padding: 3px;
+      background: linear-gradient(135deg, var(--accent-color), rgba(212,175,55,0.2));
+      margin: 0 auto 25px; position: relative;
+      box-shadow: 0 0 30px var(--accent-glow);
+      animation: float 6s ease-in-out infinite;
+    }
+    .hero-photo {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+      border: 3px solid #0a0a0a; position: relative; z-index: 2;
+    }
+
+    /* Badge ulang tahun kecil di foto */
+    .birthday-badge {
+      position: absolute; bottom: 2px; right: 2px; z-index: 3;
+      background: var(--accent-color); color: #000;
+      font-size: 0.65rem; font-weight: 700;
+      padding: 3px 8px; border-radius: 20px;
+      letter-spacing: 0.5px; text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .profile-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; color: #fff; margin-bottom: 4px;
+    }
+    .profile-tagline {
+      font-size: 0.85rem; color: var(--accent-color);
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 6px; font-weight: 500;
+    }
+    .profile-relation {
+      font-size: 0.8rem; color: #666; margin-bottom: 20px;
+    }
+
+    /* Info chips kecil */
+    .profile-chips {
+      display: flex; justify-content: center; gap: 10px;
+      flex-wrap: wrap; margin-bottom: 25px;
+    }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 30px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.75rem; color: #aaa;
+    }
+    .chip i { color: var(--accent-color); font-size: 0.7rem; }
+
+    .hero h3 {
+      font-family: 'Playfair Display', serif; font-size: 1.2rem;
+      color: var(--accent-color); margin-bottom: 8px; font-style: italic;
+    }
+
+    .typewriter {
+      font-size: 2.8rem; margin-bottom: 18px;
+      font-family: 'Playfair Display', serif;
+      line-height: 1.2; min-height: 3.4rem;
+    }
+    .typewriter::after { content: '|'; animation: blink 0.7s infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-desc {
+      font-size: 0.95rem; color: #888; max-width: 500px;
+      margin: 0 auto 25px; font-weight: 300; line-height: 1.7;
+    }
+
+    .btn-hero {
+      padding: 12px 40px;
+      background: linear-gradient(45deg, var(--accent-color), #f1c40f);
+      color: #000; border: none; font-weight: 700;
+      letter-spacing: 1px; transition: all 0.4s;
+      text-transform: uppercase; font-size: 0.85rem;
+      border-radius: 50px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      position: relative; overflow: hidden; z-index: 1;
+    }
+    .btn-hero::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.2); z-index: -1;
+      transform: scaleX(0); transform-origin: right; transition: transform 0.4s ease;
+    }
+    .btn-hero:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px var(--accent-glow); color: #000;
+    }
+    .btn-hero:hover::before { transform: scaleX(1); transform-origin: left; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    /* ========================================
+       ENVELOPE SECTION
+       ======================================== */
+    .envelope-section { padding: 120px 0; text-align: center; position: relative; }
+    .section-title {
+      text-align: center; margin-bottom: 70px; font-size: 2.8rem;
+      font-family: 'Playfair Display', serif; color: #fff;
+    }
+    .section-title span { color: var(--accent-color); }
+
+    .envelope-wrapper {
+      position: relative; cursor: pointer; width: 360px; height: 240px;
+      margin: 0 auto; perspective: 1000px; transition: transform 0.3s;
+    }
+    .envelope-wrapper:hover { transform: scale(1.02); }
+    .envelope { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; }
+
+    .letter {
+      position: absolute; top: 10px; left: 20px; right: 20px; bottom: 10px;
+      background: var(--letter-paper); z-index: 1;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 4px; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+    }
+    .letter-content { text-align: center; color: #333; padding: 10px; }
+    .letter-content i { font-size: 2rem; color: #aaa; margin-bottom: 5px; }
+    .letter-content p { font-family: 'Pacifico', cursive; font-size: 1.1rem; }
+
+    .flap {
+      position: absolute; width: 0; height: 0; border-style: solid;
+      transition: transform 0.6s ease-in-out; transform-origin: top;
+    }
+    .flap.front {
+      bottom: 0; left: 0; border-width: 0 180px 120px 180px;
+      border-color: transparent transparent var(--env-shadow) transparent;
+      z-index: 3; pointer-events: none;
+    }
+    .flap.top {
+      top: 0; left: 0; border-width: 120px 180px 120px 180px;
+      border-color: var(--env-shadow) transparent transparent transparent;
+      z-index: 4; transform-origin: top; pointer-events: none;
+    }
+    .envelope::after {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: #111; z-index: 0;
+    }
+
+    .envelope-wrapper.open .flap.top {
+      transform: rotateX(180deg); z-index: 0;
+      border-color: #222 transparent transparent transparent;
+    }
+    .envelope-wrapper.open .letter {
+      transform: translateY(-120px) scale(1.1); z-index: 5;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+    .envelope-wrapper.open .flap.front { z-index: 4; }
+
+    .wax-seal {
+      position: absolute; top: 100px; left: 50%; transform: translateX(-50%);
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, #b00, #800);
+      border-radius: 50%; z-index: 5;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.5);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.8); font-family: 'Playfair Display', serif;
+      font-weight: bold; font-size: 1.5rem;
+      border: 2px solid rgba(255,255,255,0.2);
+      transition: transform 0.6s ease-in-out, opacity 0.3s;
+      pointer-events: none;
+    }
+    .envelope-wrapper.open .wax-seal {
+      transform: translateX(-50%) rotateX(180deg) translateY(10px); opacity: 0;
+    }
+
+    .click-hint {
+      margin-top: 40px; font-size: 0.9rem; color: var(--accent-color);
+      letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+    }
+
+    /* ========================================
+       TIMELINE SECTION
+       ======================================== */
+    .timeline-section { padding: 100px 0; position: relative; overflow: hidden; }
+    .timeline { position: relative; max-width: 800px; margin: 0 auto; padding: 20px 0; }
+    .timeline::before {
+      content: ''; position: absolute; top: 0; bottom: 0; left: 50%;
+      width: 2px; background: var(--accent-color); transform: translateX(-50%);
+    }
+    .timeline-item { margin-bottom: 50px; position: relative; width: 50%; }
+    .timeline-item:nth-child(odd) { left: 0; padding-right: 40px; text-align: right; }
+    .timeline-item:nth-child(even) { left: 50%; padding-left: 40px; }
+
+    .timeline-dot {
+      position: absolute; top: 0; width: 16px; height: 16px;
+      background: #fff; border: 3px solid var(--accent-color);
+      border-radius: 50%; z-index: 2;
+    }
+    .timeline-item:nth-child(odd) .timeline-dot { right: -8px; }
+    .timeline-item:nth-child(even) .timeline-dot { left: -8px; }
+
+    .timeline-date { color: var(--accent-color); font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; }
+    .timeline-content h3 { font-size: 1.4rem; margin-bottom: 10px; color: #fff; }
+    .timeline-content p { color: #ccc; font-size: 0.95rem; line-height: 1.6; }
+
+    /* ========================================
+       LETTER MODAL
+       ======================================== */
+    #letter-modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(12px);
+      z-index: 2000; display: flex; justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+    }
+    #letter-modal.active { opacity: 1; pointer-events: auto; }
+
+    .modal-paper-container {
+      background: var(--letter-paper);
+      width: 90%; max-width: 650px; max-height: 90vh;
+      padding: 60px 50px; border-radius: 2px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+      position: relative; overflow-y: auto;
+      text-align: center;
+      transform: translateY(50px) scale(0.95);
+      transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    }
+    #letter-modal.active .modal-paper-container { transform: translateY(0) scale(1); }
+
+    .close-modal {
+      position: absolute; top: 20px; right: 25px;
+      font-size: 2rem; color: #ccc; cursor: pointer;
+      transition: 0.3s; z-index: 10;
+    }
+    .close-modal:hover { color: #000; transform: rotate(90deg); }
+
+    .modal-img {
+      width: 100%; max-width: 100%; height: auto;
+      border-radius: 2px; margin-bottom: 30px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      border: 15px solid white;
+      transform: rotate(-2deg);
+    }
+    .modal-title {
+      font-family: 'Playfair Display', serif; font-size: 2.2rem;
+      margin-bottom: 30px; color: #222;
+    }
+    .modal-body {
+      font-family: 'Poppins', sans-serif; font-size: 1.05rem; line-height: 1.9;
+      text-align: left; color: #444; white-space: pre-wrap;
+      border-top: 1px solid #ddd; border-bottom: 1px solid #ddd;
+      padding: 20px 0; margin-bottom: 30px;
+    }
+    .modal-signature {
+      text-align: right; font-family: 'Pacifico', cursive;
+      font-size: 1.8rem; color: var(--accent-color);
+    }
+
+    /* ========================================
+       MEMORY CARDS
+       ======================================== */
+    .memory-section { padding: 100px 0; background: rgba(0,0,0,0.2); }
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px; margin-top: 50px;
+    }
+    .flip-card { height: 400px; perspective: 1500px; }
+    .flip-card-inner {
+      position: relative; width: 100%; height: 100%;
+      transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-style: preserve-3d; border-radius: 16px;
+    }
+    .flip-card:hover .flip-card-inner { transform: rotateY(180deg) scale(1.03); }
+    .flip-card-front, .flip-card-back {
+      position: absolute; width: 100%; height: 100%;
+      backface-visibility: hidden; border-radius: 16px;
+      overflow: hidden; border: 1px solid var(--glass-border);
+    }
+    .flip-card-front img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+    .flip-card:hover .flip-card-front img { transform: scale(1.1); }
+    .card-overlay {
+      position: absolute; bottom: 0; left: 0; width: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+      padding: 30px 20px; color: white;
+    }
+    .flip-card-back {
+      background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+      transform: rotateY(180deg);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 40px; text-align: center; border: 1px solid var(--accent-color);
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.5);
+    }
+    .flip-card-back h3 {
+      color: var(--accent-color); margin-bottom: 15px;
+      font-family: 'Playfair Display', serif; font-size: 1.8rem;
+    }
+    .flip-card-back p { color: #ccc; font-style: italic; font-size: 0.95rem; }
+    .flip-card-back i {
+      font-size: 3rem; color: rgba(255,255,255,0.05);
+      position: absolute; bottom: 20px; right: 20px;
+    }
+
+ /* ========================================
+   GALLERY (SUDAH DIPERLAMBAT & COCOK UNTUK LAGU SYAHDU)
+   ======================================== */
+.gallery-section { 
+  padding: 100px 0; 
+  overflow: hidden; 
+  position: relative; 
+}
+
+.marquee-container {
+  display: flex; 
+  overflow: hidden; 
+  padding: 40px 0; 
+  user-select: none;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-track { 
+  display: flex; 
+  gap: 40px; 
+  /* DIPERBAIKI: Durasi diubah ke 120s agar pergerakan slide lambat dan halus */
+  animation: scroll 120s linear infinite; 
+}
+
+/* EFEK TAMBAHAN: Slide otomatis berhenti berjalan saat foto disentuh kursor */
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  flex: 0 0 auto; 
+  width: 280px; 
+  height: 320px;
+  background: white; 
+  padding: 15px 15px 60px 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s; 
+  transform: rotate(var(--rot));
+}
+
+/* Efek saat foto di-hover (foto agak membesar dan posisinya jadi lurus) */
+.marquee-item:hover { 
+  z-index: 10; 
+  transform: scale(1.1) rotate(0deg) !important; 
+}
+
+.marquee-item img {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover;
+  filter: grayscale(20%); 
+  transition: 0.3s;
+}
+
+.marquee-item:hover img { 
+  filter: grayscale(0%); 
+}
+
+@keyframes scroll {
+  0% { 
+    transform: translateX(0); 
+  }
+  100% { 
+    /* Dihitung: (lebar foto 280px + jarak 40px) * 50 foto */
+    transform: translateX(calc(-320px * 50)); 
+  }
+}
+
+    /* ========================================
+       WISHES FORM
+       ======================================== */
+    .wishes-section { padding: 100px 0; }
+    .wishes-form {
+      background: var(--card-bg); backdrop-filter: blur(15px);
+      padding: 50px; border-radius: 20px; border: 1px solid var(--glass-border);
+      max-width: 650px; margin: 0 auto; text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    }
+    .form-group { margin-bottom: 25px; text-align: left; }
+    .form-label { display: block; margin-bottom: 10px; color: #ccc; font-size: 0.9rem; letter-spacing: 1px; }
+    .form-input {
+      width: 100%; padding: 15px 20px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.3);
+      color: white; font-family: 'Poppins', sans-serif; transition: 0.3s;
+    }
+    .form-input:focus { outline: none; border-color: var(--accent-color); background: rgba(0,0,0,0.5); }
+    .btn-submit {
+      width: 100%; padding: 16px; border-radius: 10px; border: none;
+      background: var(--primary-color); color: black; font-weight: 700;
+      font-size: 1rem; cursor: pointer; transition: 0.3s;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .btn-submit:hover {
+      background: var(--accent-color); transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+    }
+
+    /* ========================================
+       MUSIC PLAYER
+       ======================================== */
+    .music-control {
+      position: fixed; bottom: 30px; left: 30px;
+      width: 50px; height: 50px; background: var(--accent-color);
+      border-radius: 50%; display: flex; justify-content: center; align-items: center;
+      color: #000; font-size: 1.2rem; cursor: pointer; z-index: 1000;
+      box-shadow: 0 0 15px var(--accent-glow);
+      animation: spin-slow 4s linear infinite;
+    }
+    .music-control.playing { animation: none; background: #fff; color: #000; }
+    @keyframes spin-slow { 100% { transform: rotate(360deg); } }
+
+    /* ========================================
+       FOOTER & TOAST
+       ======================================== */
+    footer {
+      background: black; color: #666; padding: 40px 0;
+      text-align: center; border-top: 1px solid #111; padding-bottom: 80px;
+    }
+    .toast {
+      position: fixed; bottom: 30px; right: 30px; background: #1a1a1a; color: white;
+      padding: 20px 30px; border-radius: 8px; border-left: 5px solid var(--accent-color);
+      display: flex; align-items: center; gap: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transform: translateX(150%);
+      transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      z-index: 3000;
+    }
+    .toast i { color: var(--accent-color); font-size: 1.2rem; }
+    .toast.show { transform: translateX(0); }
+
+    /* ========================================
+       RESPONSIVE
+       ======================================== */
+    @media (max-width: 768px) {
+      .hero h1, .typewriter { font-size: 2.2rem; min-height: 2.8rem; }
+      .nav-links { display: none; }
+      .profile-card { padding: 35px 30px 30px; }
+      .hero-photo-wrapper { width: 110px; height: 110px; }
+      .profile-name { font-size: 1.5rem; }
+      .envelope-wrapper { transform: scale(0.85); }
+      .modal-paper-container { padding: 40px 25px; width: 95%; }
+      .timeline::before { left: 20px; }
+      .timeline-item { width: 100%; padding-left: 50px; padding-right: 0; text-align: left; }
+      .timeline-item:nth-child(even) { left: 0; }
+      .timeline-item:nth-child(odd) { text-align: left; padding-right: 0; }
+      .timeline-dot { left: 12px !important; right: auto !important; }
+      .music-control { bottom: 20px; left: 20px; width: 40px; height: 40px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="progress-container">
+    <div class="progress-bar" id="myBar"></div>
+  </div>
+
+  <!-- ========================================
+       LOADING SCREEN - CINEMATIC
+       ======================================== -->
+  <div id="preloader">
+    <div class="preloader-bg-particles" id="preloaderParticles"></div>
+    <div class="preloader-line"></div>
+    <div class="preloader-title">Friendship</div>
+    <div class="preloader-subtitle">Selamat Ulang Tahun!</div>
+    <div class="preloader-progress-wrapper">
+      <div class="preloader-progress-track">
+        <div class="preloader-progress-fill" id="preloaderFill"></div>
+      </div>
+      <div class="preloader-percent" id="preloaderPercent">0%</div>
+    </div>
+    <div class="preloader-line-bottom"></div>
+  </div>
+
+  <div id="toast" class="toast">
+    <i class="fas fa-paper-plane"></i>
+    <span>Pesan harapanmu telah terkirim!</span>
+  </div>
+
+  <header id="header">
+    <div class="container nav-wrapper">
+      <a href="" class="logo">Project <span class="text-accent">Ultah Satria</span></a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#beranda">Home</a></li>
+          <li><a href="#amplop">Letter</a></li>
+          <li><a href="#timeline">Our Story</a></li>
+          <li><a href="#memory">Memory</a></li>
+          <li><a href="#gallery">Galery</a></li>
+          <li><a href="#wishes">Wish</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========================================
+       HERO / PROFIL
+       ======================================== -->
+  <section id="beranda" class="hero">
+    <div class="particles" id="particles"></div>
+
+    <div class="hero-content reveal active">
+      <div class="profile-card">
+        <div class="hero-photo-wrapper">
+          <img src="https://picsum.photos/seed/friend1/300/300" class="hero-photo" alt="Best Friend">
+          <div class="birthday-badge">Birthday</div>
+        </div>
+
+        <div class="profile-name">Kadek Satria Ari Putra</div>
+        <div class="profile-tagline">Sahabat Sejati</div>
+        <div class="profile-relation">2 tahun berteman &amp; terus berlanjut</div>
+
+        <div class="profile-chips">
+          <span class="chip"><i class="fas fa-video"></i> 20 Years Old</span>
+          <span class="chip"><i class="fas fa-laugh-beam"></i> Raja Iblis</span>
+          <span class="chip"><i class="fas fa-calendar-check"></i> Sejak 2 Juli 2024</span>
+        </div>
+
+        <h3>Selamat Ulang Tahun</h3>
+        <h1 class="typewriter"></h1>
+        <p class="hero-desc">Dua tahun sudah kita saling kenal. Susah Senang, Tawa Canda Bersama Telah Kita Lalui. Terima kasih ya.</p>
+        <a href="#amplop" class="btn-hero">Baca Pesan Untukmu</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       ENVELOPE
+       ======================================== -->
+  <section id="amplop" class="envelope-section reveal">
+    <div class="container">
+      <h2 class="section-title">Sebuah <span>Pesan</span></h2>
+
+      <div class="envelope-wrapper" id="envelopeBtn">
+        <div class="envelope">
+          <div class="flap top"></div>
+          <div class="letter">
+            <div class="letter-content">
+              <i class="fas fa-heart"></i>
+              <p>Untuk Kamu</p>
+            </div>
+          </div>
+          <div class="flap front"></div>
+          <div class="wax-seal">2</div>
+        </div>
+      </div>
+
+      <div class="click-hint"><i class="fas fa-mouse-pointer"></i> Ketuk Amplop</div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       TIMELINE
+       ======================================== -->
+  <section id="timeline" class="timeline-section reveal">
+    <div class="container">
+      <h2 class="section-title">Perjalanan <span>Kita</span></h2>
+      <div class="timeline">
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Awal Pertemuan</div>
+            <h3>Live TikTok</h3>
+            <p>Masih ingat lu kan? awal awal kita meet, di jam jam subuh, masuk di live cosmic, tidur trus dipertemuin lewat gift korun 2 mawar dan yang dapet lu ama gw wkwk</p>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Bulan-bulan Berikutnya</div>
+            <h3>Susah Senang Bersama</h3>
+            <p>Berawal dari chat discord ke WA kita sering main bareng, discord dll, yang dimana gw ga expect lu orangnya asik banget buat di ajak bercanda dan ngobrolin hal hal yang serius</p>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Tahun ke-1</div>
+            <h3>Satu Tahun Kenalan</h3>
+            <p>Satu tahun kita yang mungkin berjalan dengan cepat, disini lu udah jadi beneran keluarga bagi gw, walaupun dulu sering hilang hilangan, semua masalah kita lewatin bareng bareng.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Hari Ini</div>
+            <h3>2 Tahun Berteman</h3>
+            <p>Dan sekarang ga kerasa udh 2 tahun berlalu, lu masih jadi orang yang sama, suka ngambekan, mood naik turun, tapi sekarang udah sibuk kerja eaa (minta uang proyek nya bg aowaokaok)</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       LETTER MODAL
+       ======================================== -->
+  <div id="letter-modal">
+    <div class="modal-paper-container">
+      <div class="close-modal" id="closeModal">&times;</div>
+
+      <img src="https://picsum.photos/seed/letterphoto/800/500" alt="Foto Kenangan" class="modal-img">
+
+      <h2 class="modal-title">HAPPY BIRTHDAY, SATRIA</h2>
+
+      <div class="modal-body">Selamat ulang tahun ke 20 tahun sat!
+
+        Selamat ulang tahun ke-20 tahun sat! Udah masuk ke kepala 2 ya wak wkwk. Gw sebagai temen lu yang dari 2 tahun ini ngerasain semuanya — mulai dari sedih, seneng, susah bareng. Ya walau kadang kita pernah ga sejalan, tapi semua itu kita laluin sama-sama. Gw harap lu ama gw selalu pertahanin persahabatan yang kaya saudara sedarah ini. Mungkin cuman ini hadiah dari gw, gw gatau lagi mau kasih apa. Semoga dengan web ini cukup buat lu. Makasih udah bertahan dari dulu. Jangan sungkan buat cerita sama gw ini wkwk. Suatu hari kalo kita semisal udah beranjak dewasa dan ketemuan, kita wujudin mimpi-mimpi kita waktu dulu — pergi ke pantai, jalan bareng, nikmatin sunset di Bali, minum es kelapa. Atau cuman sekedar duduk di rumah, nongki di tempat tidur, layaknya kaya temen-temen real life lu pada umumnya. Semoga kerjaan lu dipermudah. Semoga di umur 20 tahun ini lu semakin dewasa dan bijak dalam mengambil keputusan. Makasih udah jadi temen gw selama 2 tahun ini. I hope bonding kita yang udah dibentuk dari 2024 bakalan bertahan selama-lamanya. Sekali lagi, Selamat Ulang Tahun & Selamat 2 Tahun Atas Pertemanan Kita..
+</div>
+
+      <div class="modal-signature">
+        Sahabatmu
+        Shio.
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       MEMORY CARDS
+       ======================================== -->
+  <section id="memory" class="memory-section">
+    <div class="container">
+      <h2 class="section-title reveal">Momen <span>Berharga</span></h2>
+      <div class="cards-grid">
+
+        <div class="flip-card reveal">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="https://picsum.photos/seed/mem1/400/600" alt="Kenangan 1">
+              <div class="card-overlay">
+                <h3>Pertama Kenalan</h3>
+                <p>Dari sebuah komentar TikTok.</p>
+              </div>
+            </div>
+            <div class="flip-card-back">
+              <i class="fas fa-comment-dots"></i>
+              <h3>Awalnya Biasa Aja</h3>
+              <p>"Siapa sangka dari sekadar reply komentar di TikTok, akhirnya jadi teman dekat."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card reveal">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="https://picsum.photos/seed/mem2/400/600" alt="Kenangan 2">
+              <div class="card-overlay">
+                <h3>Susah Senang</h3>
+                <p>Lebih dari sekadar ngobrol.</p>
+              </div>
+            </div>
+            <div class="flip-card-back">
+              <i class="fas fa-handshake"></i>
+              <h3>Bersama</h3>
+              <p>"Ada masalah, bisa curhat. Ada yang lucu, bisa ketawa bareng. Itu yang bikang nyaman."</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flip-card reveal">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <img src="https://picsum.photos/seed/mem3/400/600" alt="Kenangan 3">
+              <div class="card-overlay">
+                <h3>2 Tahun</h3>
+                <p>Masih berlanjut.</p>
+              </div>
+            </div>
+            <div class="flip-card-back">
+              <i class="fas fa-infinity"></i>
+              <h3>Lanjut</h3>
+              <p>"Dua tahun baru permulaan. Semoga kita tetap bisa ngobrol seperti sekarang di tahun-tahun berikutnya."</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       GALLERY
+       ======================================== -->
+  <section id="gallery" class="gallery-section reveal">
+    <div class="container">
+      <h2 class="section-title">Galeri <span>Polaroid</span></h2>
+    </div>
+    <div class="marquee-container">
+      <div class="marquee-track" id="marqueeTrack"></div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       WISHES FORM
+       ======================================== -->
+  <section id="wishes" class="wishes-section reveal">
+    <div class="container">
+      <h2 class="section-title">Kirim <span>Harapan</span></h2>
+      <div class="wishes-form">
+        <form id="wishForm">
+          <div class="form-group">
+            <label class="form-label">Nama Kamu</label>
+            <input type="text" class="form-input" placeholder="Tulis namamu di sini..." required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ucapan</label>
+            <textarea class="form-input" rows="5" placeholder="Tulis ucapan untuk sahabat..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Kirim Ucapan <i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+ <div class="music-control" id="musicControl">
+    <i class="fas fa-music"></i>
+    <audio id="bgMusic">
+      <source src="/audio/Monokrom.mp3" type="audio/mp3">
+    </audio>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>Dibuat dengan <i class="fas fa-heart" style="color: var(--accent-color);"></i> untuk hari spesialmu.</p>
+      <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.5;">&copy; 2026 Friendship Anniversary</p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+
+      /* ==============================
+         1. CINEMATIC PRELOADER
+         ============================== */
+      const preloaderParticles = $('#preloaderParticles');
+      for (let i = 0; i < 30; i++) {
+        const size = Math.random() * 3 + 1;
+        const left = Math.random() * 100;
+        const duration = Math.random() * 4 + 3;
+        const delay = Math.random() * 3;
+        preloaderParticles.append(
+          `<span style="left:${left}%;width:${size}px;height:${size}px;animation-duration:${duration}s;animation-delay:${delay}s;"></span>`
+        );
+      }
+
+      setTimeout(function() {
+        $('#preloader').addClass('loading-started');
+
+        let percent = 0;
+        const percentEl = $('#preloaderPercent');
+        const interval = setInterval(function() {
+          percent += Math.floor(Math.random() * 4) + 1;
+          if (percent > 100) percent = 100;
+          percentEl.text(percent + '%');
+          if (percent >= 100) {
+            clearInterval(interval);
+            setTimeout(function() {
+              $('#preloader').addClass('fade-out');
+              setTimeout(function() {
+                $('#preloader').remove();
+                typeWriter(); 
+              }, 800);
+            }, 400);
+          }
+        }, 80);
+
+      }, 1500);
+
+      /* ==============================
+         2. TYPEWRITER
+         ============================== */
+      const textToType = "Sahabatku";
+      const typeWriterElement = $('.typewriter');
+      let i = 0;
+
+      function typeWriter() {
+        if (i < textToType.length) {
+          typeWriterElement.append(textToType.charAt(i));
+          i++;
+          setTimeout(typeWriter, 150);
+        }
+      }
+
+      /* ==============================
+         3. SCROLL REVEAL & PROGRESS
+         ============================== */
+      $(window).on('scroll', function() {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        $("#myBar").css("width", scrolled + "%");
+
+        $('.reveal').each(function() {
+          const bottom_of_object = $(this).offset().top + 50;
+          const bottom_of_window = $(window).scrollTop() + $(window).height();
+          if (bottom_of_window > bottom_of_object) {
+            $(this).addClass('active');
+          }
+        });
+      });
+
+      /* ==============================
+         4. MUSIC PLAYER (SUDAH DIPERBAIKI DENGAN PLAYLIST)
+         ============================== */
+      const musicControl = $('#musicControl');
+      const bgMusic = $('#bgMusic')[0]; // Element native audio
+
+      // Daftar lagu kamu, silakan tambah atau ubah path di sini
+      const playlist = [
+        "/audio/Monokrom.mp3",
+        "/audio/Billie Eilish - BIRDS OF A FEATHER - LatinHype (youtube).mp3",
+        "/audio/Monokrom.mp3",
+        "/audio/Yura Yunita - Dunia Tipu-Tipu.mp3"
+      ];
+      let currentTrack = 0;
+
+      // Fungsi untuk memutar lagu berikutnya
+      function nextSong() {
+        currentTrack++;
+        // Jika lagu terakhir sudah selesai, kembali ke lagu pertama
+        if (currentTrack >= playlist.length) {
+          currentTrack = 0;
+        }
+        bgMusic.src = playlist[currentTrack];
+        bgMusic.play();
+        
+        // Memastikan visual tombol tetap berstatus 'Pause' karena musik otomatis jalan
+        musicControl.addClass('playing').html('<i class="fas fa-pause"></i>');
+      }
+
+      // Kontrol Klik Play / Pause
+      musicControl.on('click', function() {
+        if (bgMusic.paused) {
+          bgMusic.play();
+          musicControl.addClass('playing').html('<i class="fas fa-pause"></i>');
+        } else {
+          bgMusic.pause();
+          musicControl.removeClass('playing').html('<i class="fas fa-music"></i>');
+        }
+      });
+
+      // Deteksi otomatis saat lagu selesai, langsung panggil fungsi ganti lagu
+      bgMusic.addEventListener('ended', function() {
+        nextSong();
+      });
+
+      /* ==============================
+         5. ENVELOPE INTERACTION
+         ============================== */
+      $('#envelopeBtn').on('click', function() {
+        if (!$(this).hasClass('open')) {
+          $(this).addClass('open');
+          createParticles();
+          $('.click-hint').fadeOut();
+          setTimeout(function() {
+            $('#letter-modal').addClass('active');
+          }, 1000);
+        } else {
+          $('#letter-modal').addClass('active');
+        }
+      });
+
+      /* ==============================
+         6. MODAL LOGIC
+         ============================== */
+      $('#closeModal, #letter-modal').on('click', function(e) {
+        if (e.target.id === 'closeModal' || e.target.id === 'letter-modal') {
+          $('#letter-modal').removeClass('active');
+        }
+      });
+
+      /* ==============================
+         7. POLAROID MARQUEE
+         ============================== */
+      const galleryImages = [
+        'https://picsum.photos/seed/pic1/280/320', 'https://picsum.photos/seed/pic2/280/320',
+        'https://picsum.photos/seed/pic3/280/320', 'https://picsum.photos/seed/pic4/280/320',
+        'https://picsum.photos/seed/pic5/280/320', 'https://picsum.photos/seed/pic6/280/320',
+        'https://picsum.photos/seed/pic7/280/320', 'https://picsum.photos/seed/pic8/280/320',
+        'https://picsum.photos/seed/pic9/280/320', 'https://picsum.photos/seed/pic10/280/320',
+        'https://picsum.photos/seed/pic11/280/320', 'https://picsum.photos/seed/pic12/280/320',
+        'https://picsum.photos/seed/pic13/280/320', 'https://picsum.photos/seed/pic14/280/320',
+        'https://picsum.photos/seed/pic15/280/320', 'https://picsum.photos/seed/pic16/280/320',
+        'https://picsum.photos/seed/pic17/280/320', 'https://picsum.photos/seed/pic18/280/320',
+        'https://picsum.photos/seed/pic19/280/320', 'https://picsum.photos/seed/pic20/280/320',
+        'https://picsum.photos/seed/pic21/280/320', 'https://picsum.photos/seed/pic22/280/320',
+        'https://picsum.photos/seed/pic23/280/320', 'https://picsum.photos/seed/pic24/280/320',
+        'https://picsum.photos/seed/pic25/280/320', 'https://picsum.photos/seed/pic26/280/320',
+        'https://picsum.photos/seed/pic27/280/320', 'https://picsum.photos/seed/pic28/280/320',
+        'https://picsum.photos/seed/pic29/280/320', 'https://picsum.photos/seed/pic30/280/320',
+        'https://picsum.photos/seed/pic31/280/320', 'https://picsum.photos/seed/pic32/280/320',
+        'https://picsum.photos/seed/pic33/280/320', 'https://picsum.photos/seed/pic34/280/320',
+        'https://picsum.photos/seed/pic35/280/320', 'https://picsum.photos/seed/pic36/280/320',
+        'https://picsum.photos/seed/pic37/280/320', 'https://picsum.photos/seed/pic38/280/320',
+        'https://picsum.photos/seed/pic39/280/320', 'https://picsum.photos/seed/pic40/280/320',
+        'https://picsum.photos/seed/pic41/280/320', 'https://picsum.photos/seed/pic42/280/320',
+        'https://picsum.photos/seed/pic43/280/320', 'https://picsum.photos/seed/pic44/280/320',
+        'https://picsum.photos/seed/pic45/280/320', 'https://picsum.photos/seed/pic46/280/320',
+        'https://picsum.photos/seed/pic47/280/320', 'https://picsum.photos/seed/pic48/280/320',
+        'https://picsum.photos/seed/pic49/280/320', 'https://picsum.photos/seed/pic50/280/320'
+      ];
+      
+//       const galleryImages = [
+//   'images/foto1.jpg', 
+//   'images/foto2.jpg',
+//   'images/foto3.jpg', 
+//   'images/foto4.jpg',
+//   'images/foto5.jpg', 
+//   'images/foto6.jpg',
+//   'images/foto7.jpg', 
+//   'images/foto8.jpg',
+//   'images/foto9.jpg', 
+//   'images/foto10.jpg',
+//   // ... dan seterusnya sampai foto ke-50
+// ];
+
+      let marqueeHtml = '';
+      [...galleryImages, ...galleryImages].forEach(function(src) {
+        const rot = (Math.random() * 10 - 5) + 'deg';
+        marqueeHtml += '<a href="' + src + '" target="_blank" class="marquee-item" style="--rot: ' + rot + '"><img src="' + src + '"></a>';
+      });
+      $('#marqueeTrack').html(marqueeHtml);
+
+      /* ==============================
+         8. FORM HANDLING
+         ============================== */
+      $('#wishForm').on('submit', function(e) {
+        e.preventDefault();
+        const btn = $(this).find('.btn-submit');
+        const originalText = btn.html();
+        btn.html('<i class="fas fa-spinner fa-spin"></i> Mengirim...').prop('disabled', true);
+        setTimeout(function() {
+          $('#toast').addClass('show');
+          setTimeout(function() { $('#toast').removeClass('show'); }, 4000);
+          $('#wishForm')[0].reset();
+          btn.html(originalText).prop('disabled', false);
+        }, 1500);
+      });
+
+      /* ==============================
+         9. PARTICLE EFFECTS
+         ============================== */
+      function createParticles() {
+        for (let i = 0; i < 40; i++) {
+          let p = $('<div class="particle"></div>');
+          const colors = ['#d4af37', '#ffffff', '#888888'];
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          p.css({
+            position: 'absolute',
+            width: Math.random() * 8 + 4 + 'px',
+            height: Math.random() * 8 + 4 + 'px',
+            background: color, borderRadius: '50%',
+            top: '50%', left: '50%', zIndex: 9999,
+            pointerEvents: 'none', opacity: 1
+          });
+          $('#envelopeBtn').parent().append(p);
+          const destX = (Math.random() - 0.5) * 400;
+          const destY = (Math.random() - 0.5) * 400;
+          p.animate({
+            top: '+=' + destY, left: '+=' + destX, opacity: 0
+          }, {
+            duration: 1000 + Math.random() * 1000,
+            easing: 'easeOutCubic',
+            complete: function() { p.remove(); }
+          });
+        }
+      }
+
+      /* ==============================
+         10. BACKGROUND PARTICLES
+         ============================== */
+      const particlesContainer = $('#particles');
+      for (let i = 0; i < 5; i++) {
+        let bgP = $('<div></div>').css({
+          position: 'absolute', width: '300px', height: '300px',
+          background: 'radial-gradient(circle, rgba(212,175,55,0.05) 0%, rgba(0,0,0,0) 70%)',
+          borderRadius: '50%', top: Math.random() * 100 + '%',
+          left: Math.random() * 100 + '%',
+          animation: 'float ' + (10 + Math.random() * 10) + 's infinite ease-in-out'
+        });
+        particlesContainer.append(bgP);
+      }
+    });
+  </script>
+</body>
+
+</html>
