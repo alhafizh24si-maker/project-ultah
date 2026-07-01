@@ -618,7 +618,55 @@
       background: var(--accent-color); transform: translateY(-2px);
       box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
     }
+        /* ========================================
+       WISHES LIST (BUKU TAMU)
+       ======================================== */
+    .wish-list-container {
+      max-width: 650px; 
+      margin: 40px auto 0; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 20px;
+    }
 
+    .wish-card {
+      background: rgba(255,255,255,0.03); 
+      border: 1px solid var(--glass-border); 
+      border-radius: 12px; 
+      padding: 25px;
+      animation: fadeSlideIn 0.5s ease forwards; /* Animasi saat muncul */
+      opacity: 0;
+      transform: translateY(15px);
+      transition: border-color 0.3s;
+    }
+    .wish-card:hover { border-color: rgba(255,255,255,0.2); }
+
+    .wish-header {
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      margin-bottom: 12px;
+    }
+    .wish-avatar {
+      width: 40px; 
+      height: 40px; 
+      background: linear-gradient(135deg, var(--accent-color), #333);
+      border-radius: 50%; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
+      font-weight: 700; 
+      color: #000; 
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .wish-meta h4 { font-size: 0.95rem; color: #fff; margin-bottom: 2px; }
+    .wish-meta span { font-size: 0.75rem; color: #555; }
+    .wish-message { color: #bbb; font-size: 0.9rem; line-height: 1.7; font-style: italic; }
+
+    @keyframes fadeSlideIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
     /* ========================================
        MUSIC PLAYER
        ======================================== */
@@ -653,6 +701,58 @@
     .toast.show { transform: translateX(0); }
 
     /* ========================================
+       NEW FEATURES CSS (v1)
+       ======================================== */
+    .blink { animation: blink-eye 2s infinite; }
+    @keyframes blink-eye { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    .countdown-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 40px;
+    }
+    .countdown-box {
+      background: var(--card-bg); backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border); border-radius: 12px;
+      padding: 20px 10px; text-align: center;
+    }
+    .countdown-box span {
+      display: block; font-family: 'Playfair Display', serif;
+      font-size: 2.5rem; color: var(--accent-color); font-weight: 700;
+      line-height: 1; margin-bottom: 5px;
+    }
+    .countdown-box p { font-size: 0.8rem; color: #fff; text-transform: uppercase; letter-spacing: 2px; }
+    .countdown-finished {
+      text-align: center; font-size: 1.5rem; color: var(--accent-color);
+      font-family: 'Playfair Display', serif; margin-top: 40px; display: none;
+    }
+
+    .wish-actions {
+      position: absolute; top: 15px; right: 15px; display: flex; gap: 10px;
+    }
+    .btn-like, .btn-delete {
+      background: none; border: none; color: #666; cursor: pointer; transition: 0.3s;
+      display: flex; align-items: center; gap: 5px; font-size: 0.9rem;
+    }
+    .btn-like:hover, .btn-like.liked { color: #e74c3c; }
+    .btn-delete:hover { color: #e74c3c; }
+    .wish-card { position: relative; border-left: 3px solid transparent; }
+    .wish-card.new { border-left-color: var(--accent-color); }
+
+    #secret-modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px);
+      z-index: 3000; display: flex; justify-content: center; align-items: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
+    }
+    #secret-modal.active { opacity: 1; pointer-events: auto; }
+    .confetti {
+      position: absolute; width: 10px; height: 10px; background: var(--accent-color);
+      top: -10px; animation: fall linear forwards;
+    }
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    /* ========================================
        RESPONSIVE
        ======================================== */
     @media (max-width: 768px) {
@@ -669,6 +769,166 @@
       .timeline-item:nth-child(odd) { text-align: left; padding-right: 0; }
       .timeline-dot { left: 12px !important; right: auto !important; }
       .music-control { bottom: 20px; left: 20px; width: 40px; height: 40px; }
+      .countdown-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ========================================
+       v2: MUSIC PLAYER PANEL
+       ======================================== */
+    .music-container {
+      position: fixed; bottom: 30px; left: 30px; z-index: 1000;
+      display: flex; flex-direction: column; align-items: flex-start;
+    }
+    .music-panel {
+      background: var(--glass-shine); backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border); border-radius: 16px;
+      padding: 15px; width: 250px; margin-bottom: 15px;
+      opacity: 0; transform: translateY(20px); pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .music-container:hover .music-panel {
+      opacity: 1; transform: translateY(0); pointer-events: auto;
+    }
+    .mood-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px;
+    }
+    .mood-card {
+      background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 10px 5px; text-align: center; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mood-card:hover, .mood-card.active {
+      background: var(--accent-glow); border-color: var(--accent-color);
+    }
+    .mood-card i { display: block; font-size: 1.2rem; margin-bottom: 5px; color: var(--accent-color); }
+    .mood-card span { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #fff; }
+    
+    .now-playing-marquee {
+      width: 100%; overflow: hidden; white-space: nowrap; margin-bottom: 8px;
+      font-size: 0.75rem; color: #ccc;
+    }
+    .now-playing-marquee span {
+      display: inline-block; padding-left: 100%;
+      animation: marquee-text 8s linear infinite;
+    }
+    @keyframes marquee-text {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    .audio-progress-bar {
+      width: 100%; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px;
+      overflow: hidden;
+    }
+    .audio-progress-fill {
+      height: 100%; width: 0%; background: var(--accent-color);
+      box-shadow: 0 0 8px var(--accent-glow); transition: width 0.1s linear;
+    }
+    .music-control-btn {
+      width: 50px; height: 50px; background: var(--accent-color);
+      border-radius: 50%; display: flex; justify-content: center; align-items: center;
+      color: #000; font-size: 1.2rem; cursor: pointer;
+      box-shadow: 0 0 15px var(--accent-glow);
+      animation: spin-slow 4s linear infinite;
+    }
+    .music-control-btn.playing { animation: none; background: #fff; color: #000; }
+
+    /* ========================================
+       v2: OUR SONG
+       ======================================== */
+    .our-song-section { padding: 100px 0; position: relative; }
+    .song-card {
+      background: var(--card-bg); backdrop-filter: blur(15px);
+      border: 1px solid var(--accent-color); border-radius: 24px;
+      padding: 40px; display: flex; align-items: center; gap: 40px;
+      box-shadow: 0 10px 40px var(--accent-glow);
+    }
+    .vinyl-wrapper { width: 200px; height: 200px; flex-shrink: 0; position: relative; }
+    .vinyl-record {
+      width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--accent-color);
+      background: #111; position: relative; box-shadow: 0 0 30px var(--accent-glow);
+      animation: spin-slow 15s linear infinite; display: flex; justify-content: center; align-items: center;
+    }
+    .vinyl-record::before {
+      content: ''; position: absolute; width: 30%; height: 30%; background: #000;
+      border-radius: 50%; border: 2px solid #333; z-index: 2;
+    }
+    .vinyl-record img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; opacity: 0.8; }
+    .song-info { flex-grow: 1; }
+    .song-info h3 { font-size: 2rem; color: #fff; margin-bottom: 5px; font-family: 'Playfair Display', serif; }
+    .song-info .artist { color: var(--accent-color); font-size: 1rem; margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
+    .song-quote { font-style: italic; color: #ccc; font-size: 1.1rem; border-left: 3px solid var(--accent-color); padding-left: 15px; margin-bottom: 25px; line-height: 1.6; }
+    .song-actions { display: flex; gap: 15px; }
+    .btn-play-song, .btn-lyrics {
+      padding: 10px 25px; border-radius: 30px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: 0.3s;
+    }
+    .btn-play-song { background: var(--accent-color); color: #000; border: none; }
+    .btn-play-song:hover { box-shadow: 0 0 15px var(--accent-glow); transform: translateY(-2px); }
+    .btn-lyrics { background: transparent; color: #fff; border: 1px solid var(--glass-border); }
+    .btn-lyrics:hover { border-color: var(--accent-color); background: rgba(255,255,255,0.05); }
+
+    /* ========================================
+       v2: QUOTES
+       ======================================== */
+    .quotes-section { padding: 100px 0; }
+    .quotes-stack { display: flex; flex-direction: column; gap: 20px; max-width: 700px; margin: 0 auto; }
+    .quote-card { padding: 30px; border-radius: 12px; position: relative; }
+    .quote-card p { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-style: italic; line-height: 1.6; color: #fff; margin-bottom: 15px; }
+    .quote-card .quote-source { font-size: 0.85rem; color: #aaa; text-transform: uppercase; letter-spacing: 2px; }
+    .quote-card.q-gold { border-left: 4px solid var(--accent-color); }
+    .quote-card.q-white { border-left: 4px solid #fff; }
+    .quote-card.q-gray { border-left: 4px solid #666; }
+
+    /* ========================================
+       v2: LIGHTBOX & MODALS
+       ======================================== */
+    #lightbox {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95); z-index: 9999; display: flex;
+      justify-content: center; align-items: center; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #lightbox.active { opacity: 1; pointer-events: auto; }
+    .lightbox-content { position: relative; max-width: 80vw; max-height: 80vh; }
+    .lightbox-img {
+      max-width: 100%; max-height: 80vh; border: 2px solid var(--accent-color);
+      border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.8); object-fit: contain;
+    }
+    .lightbox-close {
+      position: absolute; top: -40px; right: -40px; color: #fff; font-size: 2rem; cursor: pointer; transition: 0.3s;
+    }
+    .lightbox-close:hover { color: var(--accent-color); transform: scale(1.1); }
+    .lightbox-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 50px; height: 50px; background: var(--glass-shine); backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border); border-radius: 50%;
+      display: flex; justify-content: center; align-items: center; color: #fff;
+      font-size: 1.2rem; cursor: pointer; transition: 0.3s;
+    }
+    .lightbox-nav:hover { background: rgba(255,255,255,0.1); border-color: var(--accent-color); }
+    .lightbox-prev { left: -70px; }
+    .lightbox-next { right: -70px; }
+    .lightbox-counter {
+      position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
+      color: #aaa; font-size: 0.9rem; letter-spacing: 2px;
+    }
+    .lightbox-caption {
+      position: absolute; bottom: 20px; left: 0; width: 100%; text-align: center;
+      background: rgba(0,0,0,0.7); color: #fff; padding: 10px; font-size: 0.9rem;
+    }
+    #lyrics-modal.active { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 768px) {
+      .music-container { bottom: 20px; left: 20px; }
+      .music-control-btn { width: 40px; height: 40px; font-size: 1rem; }
+      .song-card { flex-direction: column; text-align: center; padding: 30px 20px; }
+      .song-quote { border-left: none; border-top: 3px solid var(--accent-color); padding-left: 0; padding-top: 15px; }
+      .song-actions { justify-content: center; flex-wrap: wrap; }
+      .lightbox-prev { left: 10px; }
+      .lightbox-next { right: 10px; }
+      .lightbox-close { right: 0; top: -50px; }
+      .lightbox-content { width: 100%; }
     }
   </style>
 </head>
@@ -743,6 +1003,7 @@
         <h3>Selamat Ulang Tahun</h3>
         <h1 class="typewriter"></h1>
         <p class="hero-desc">Dua tahun sudah kita saling kenal. Susah Senang, Tawa Canda Bersama Telah Kita Lalui. Terima kasih ya.</p>
+        <div id="visitorCounter" style="font-size: 0.8rem; color: #666; letter-spacing: 1px; margin-bottom: 25px;"><i class="fas fa-eye blink"></i> <span id="visitorCount">3</span> orang sedang melihat halaman ini</div>
         <a href="#amplop" class="btn-hero">Baca Pesan Untukmu</a>
       </div>
     </div>
@@ -822,6 +1083,25 @@
   </section>
 
   <!-- ========================================
+       COUNTDOWN SECTION
+       ======================================== -->
+  <section id="countdown" class="reveal" style="padding: 100px 0; background: rgba(0,0,0,0.4);">
+    <div class="container">
+      <h2 class="section-title">Menuju <span>Tahun ke-2</span> Bersama</h2>
+      <div class="countdown-grid" id="countdownGrid">
+        <div class="countdown-box"><span id="cd-days">00</span><p>Hari</p></div>
+        <div class="countdown-box"><span id="cd-hours">00</span><p>Jam</p></div>
+        <div class="countdown-box"><span id="cd-minutes">00</span><p>Menit</p></div>
+        <div class="countdown-box"><span id="cd-seconds">00</span><p>Detik</p></div>
+      </div>
+      <div class="countdown-finished" id="countdownFinished">
+        Selamat! Kita sudah memasuki tahun ke-3 bersama! 🎉
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================================
        LETTER MODAL
        ======================================== -->
   <div id="letter-modal">
@@ -834,7 +1114,17 @@
 
       <div class="modal-body">Pesan Untukmu
 
-        Selamat ulang tahun ke-20 tahun sat! Udah masuk ke kepala 2 ya wak wkwk. Gw sebagai temen lu yang dari 2 tahun ini ngerasain semuanya — mulai dari sedih, seneng, susah bareng. Ya walau kadang kita pernah ga sejalan, tapi semua itu kita laluin sama-sama. Gw harap lu ama gw selalu pertahanin persahabatan yang kaya saudara sedarah ini. Mungkin cuman ini hadiah dari gw, gw gatau lagi mau kasih apa. Semoga dengan web ini cukup buat lu. Makasih udah bertahan dari dulu. Jangan sungkan buat cerita sama gw ini wkwk. Suatu hari kalo kita semisal udah beranjak dewasa dan ketemuan, kita wujudin mimpi-mimpi kita waktu dulu — pergi ke pantai, jalan bareng, nikmatin sunset di Bali, minum es kelapa. Atau cuman sekedar duduk di rumah, nongki di tempat tidur, layaknya kaya temen-temen real life lu pada umumnya. Semoga kerjaan lu dipermudah. Semoga di umur 20 tahun ini lu semakin dewasa dan bijak dalam mengambil keputusan. Makasih udah jadi temen gw selama 2 tahun ini. I hope bonding kita yang udah dibentuk dari 2024 bakalan bertahan selama-lamanya. Sekali lagi, Selamat Ulang Tahun & Selamat 2 Tahun Atas Pertemanan Kita..
+       Selamat ulang tahun ke-20, Satriaakkkk! Udah masuk ke kepala 2 ya wak wkwk.
+
+Sebagai temen yang udah 2 tahun ini ngerasain semuanya bareng lu—mulai dari sedih, seneng, sampai susah bareng—gw bersyukur banget. Ya walau kadang kita pernah nggak sejalan, tapi semua itu selalu kita laluin sama-sama. Gw harap, lu ama gw bisa selalu pertahanin persahabatan yang udah kaya saudara sedarah ini.
+
+Mungkin cuman ini hadiah yang bisa gw kasih, gw jujur gatau lagi mau kasih apa. Semoga dengan web sederhana ini cukup buat lu ya. Makasih banyak udah bertahan dari dulu, dan jangan pernah sungkan buat cerita apa aja ke gw.
+
+Suatu hari nanti, kalo kita udah sama-sama beranjak dewasa dan ketemuan lagi, yuk kita wujudin mimpi-mimpi kita waktu dulu. Pergi ke pantai, jalan bareng, nikmatin sunset di Bali sambil minum es kelapa. Atau... cuman sekedar duduk di rumah, nongki di tempat tidur, layaknya kaya temen-temen real life lu pada umumnya.
+
+Semoga kerjaan lu selalu dipermudah. Semoga di umur 20 tahun ini lu semakin dewasa dan bijak dalam mengambil keputusan. Makasih udah jadi temen gw selama 2 tahun ini. I hope bonding kita yang udah dibentuk dari 2024 bakalan bertahan selama-lamanya.
+
+Sekali lagi, Selamat Ulang Tahun & Selamat 2 Tahun Atas Pertemanan Kita!"
 </div>
 
       <div class="modal-signature">
@@ -938,15 +1228,35 @@
           <button type="submit" class="btn-submit">Kirim Ucapan <i class="fas fa-paper-plane"></i></button>
         </form>
       </div>
+      <div id="wishListContainer" class="wish-list-container"></div>
     </div>
   </section>
 
- <div class="music-control" id="musicControl">
-    <i class="fas fa-music"></i>
-    <audio id="bgMusic">
-      <source src="/audio/Monokrom.mp3" type="audio/mp3">
-    </audio>
+  <div class="music-container" id="musicContainer">
+    <div class="music-panel">
+      <div class="mood-grid">
+        <div class="mood-card active" data-mood="santai">
+          <i class="fas fa-cloud"></i><span>Santai</span>
+        </div>
+        <div class="mood-card" data-mood="ceria">
+          <i class="fas fa-sun"></i><span>Ceria</span>
+        </div>
+        <div class="mood-card" data-mood="nostalgia">
+          <i class="fas fa-moon"></i><span>Nostalgia</span>
+        </div>
+      </div>
+      <div class="now-playing-marquee"><span id="nowPlayingText">Monokrom - Tulus</span></div>
+      <div class="audio-progress-bar">
+        <div class="audio-progress-fill" id="audioProgress"></div>
+      </div>
+    </div>
+    <div class="music-control-btn" id="musicControl">
+      <i class="fas fa-music"></i>
+    </div>
   </div>
+  <audio id="bgMusic">
+    <source src="/audio/Monokrom.mp3" type="audio/mp3">
+  </audio>
 
   <footer>
     <div class="container">
@@ -954,6 +1264,51 @@
       <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.5;">&copy; 2026 Friendship Anniversary</p>
     </div>
   </footer>
+
+  <!-- ========================================
+       SECRET MODAL (EASTER EGG)
+       ======================================== -->
+  <div id="secret-modal">
+    <div class="modal-paper-container" style="max-width: 500px;">
+      <div class="close-modal" id="closeSecretModal">&times;</div>
+      <h2 class="modal-title" style="font-size: 1.8rem; color: var(--accent-color);">Pesan Rahasia untuk Satria</h2>
+      <div class="modal-body" style="text-align: center; border: none;">
+        Hei! Kalo lu nemu pesan ini, berarti lu emang iseng nyari tau wkwk.<br><br>
+        Thanks udah jadi teman yang baik selama ini. Sukses terus buat lu ya!<br><br>
+        ~ Shio
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <div class="lightbox-content">
+      <div class="lightbox-close" id="lightboxClose">&times;</div>
+      <img src="" alt="Gallery Image" class="lightbox-img" id="lightboxImg">
+      <div class="lightbox-nav lightbox-prev" id="lightboxPrev"><i class="fas fa-chevron-left"></i></div>
+      <div class="lightbox-nav lightbox-next" id="lightboxNext"><i class="fas fa-chevron-right"></i></div>
+      <div class="lightbox-counter" id="lightboxCounter">1 / 50</div>
+    </div>
+  </div>
+
+  <!-- LYRICS MODAL -->
+  <div id="lyrics-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: 0.5s ease;">
+    <div class="modal-paper-container" style="max-width: 500px;">
+      <div class="close-modal" id="closeLyricsModal" style="position: absolute; top: 20px; right: 25px; font-size: 2rem; color: #ccc; cursor: pointer; z-index: 10;">&times;</div>
+      <h2 class="modal-title" style="font-size: 1.8rem; color: var(--accent-color);">Monokrom - Tulus</h2>
+      <div class="modal-body" style="text-align: center; border: none; font-style: italic;">
+        Lembaran foto hitam putih<br>
+        Aku coba ingat lagi<br>
+        Warna bajumu kala itu<br>
+        Kali pertama di hidupku<br>
+        Manusia sepertimu<br>
+        Kehadiranmu menyapa<br><br>
+        Dimanapun kalian berada<br>
+        Ku utus rindu untukmu semua<br>
+        Kita pernah bersama...
+      </div>
+    </div>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
@@ -1019,7 +1374,6 @@
         const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
         const scrolled = (winScroll / height) * 100;
         $("#myBar").css("width", scrolled + "%");
-
         $('.reveal').each(function() {
           const bottom_of_object = $(this).offset().top + 50;
           const bottom_of_window = $(window).scrollTop() + $(window).height();
@@ -1029,55 +1383,99 @@
         });
       });
 
-      /* ==============================
-         4. MUSIC PLAYER (SUDAH DIPERBAIKI DENGAN PLAYLIST)
+     /* ==============================
+         4. MUSIC PLAYER (V2 MOOD SYSTEM)
          ============================== */
       const musicControl = $('#musicControl');
-      const bgMusic = $('#bgMusic')[0]; // Element native audio
+      const bgMusic = $('#bgMusic')[0]; 
+      const audioProgress = $('#audioProgress');
+      const nowPlayingText = $('#nowPlayingText');
 
-      // Daftar lagu kamu, silakan tambah atau ubah path di sini
-      const playlist = [
-        "/audio/Monokrom.mp3",
-        "/audio/Billie Eilish - BIRDS OF A FEATHER - LatinHype (youtube).mp3",
-        "/audio/playdate.mp3",
-        "/audio/jjk.mp3"
-      ];
-      let currentTrack = 0;
+      const playlists = {
+        santai: [
+          { src: "/audio/Monokrom.mp3", title: "Monokrom - Tulus" },
+          { src: "/audio/Billie Eilish - BIRDS OF A FEATHER - LatinHype (youtube).mp3", title: "Birds of a Feather" }
+        ],
+        ceria: [
+          { src: "/audio/playdate.mp3", title: "Playdate" },
+          { src: "/audio/jjk.mp3", title: "JJK Theme" }
+        ],
+        nostalgia: [
+          { src: "/audio/Monokrom.mp3", title: "Monokrom (Acoustic)" }
+        ]
+      };
+      
+      let currentMood = 'santai';
+      let currentTrackIdx = 0;
 
-      // Fungsi untuk memutar lagu berikutnya
-      function nextSong() {
-        currentTrack++;
-        // Jika lagu terakhir sudah selesai, kembali ke lagu pertama
-        if (currentTrack >= playlist.length) {
-          currentTrack = 0;
-        }
-        bgMusic.src = playlist[currentTrack];
-        bgMusic.play();
+      function loadSong(mood, index) {
+        currentMood = mood;
+        currentTrackIdx = index;
+        const track = playlists[mood][index];
+        bgMusic.src = track.src;
+        nowPlayingText.text(track.title);
         
-        // Memastikan visual tombol tetap berstatus 'Pause' karena musik otomatis jalan
-        musicControl.addClass('playing').html('<i class="fas fa-pause"></i>');
+        $('.mood-card').removeClass('active');
+        $(`.mood-card[data-mood="${mood}"]`).addClass('active');
       }
 
-      // Kontrol Klik Play / Pause
-      musicControl.on('click', function() {
+      function playMusic() {
+        bgMusic.play();
+        musicControl.addClass('playing').html('<i class="fas fa-pause"></i>');
+      }
+      function pauseMusic() {
+        bgMusic.pause();
+        musicControl.removeClass('playing').html('<i class="fas fa-music"></i>');
+      }
+
+      function nextSong() {
+        currentTrackIdx++;
+        if (currentTrackIdx >= playlists[currentMood].length) {
+          currentTrackIdx = 0;
+        }
+        loadSong(currentMood, currentTrackIdx);
+        playMusic();
+      }
+
+      // Initial load
+      loadSong('santai', 0);
+
+      $('.mood-card').on('click', function(e) {
+        e.stopPropagation();
+        const mood = $(this).data('mood');
+        loadSong(mood, 0);
+        playMusic();
+      });
+
+      musicControl.on('click', function(e) {
+        e.stopPropagation();
         if (bgMusic.paused) {
-          bgMusic.play();
-          musicControl.addClass('playing').html('<i class="fas fa-pause"></i>');
+          playMusic();
         } else {
-          bgMusic.pause();
-          musicControl.removeClass('playing').html('<i class="fas fa-music"></i>');
+          pauseMusic();
         }
       });
 
-      // Deteksi otomatis saat lagu selesai, langsung panggil fungsi ganti lagu
-      bgMusic.addEventListener('ended', function() {
-        nextSong();
+      bgMusic.addEventListener('ended', nextSong);
+      
+      bgMusic.addEventListener('timeupdate', function() {
+        if(bgMusic.duration) {
+          const progress = (bgMusic.currentTime / bgMusic.duration) * 100;
+          audioProgress.css('width', progress + '%');
+        }
       });
 
       /* ==============================
-         5. ENVELOPE INTERACTION
+         5. ENVELOPE INTERACTION (DENGAN TRID AUTOPLAY)
          ============================== */
       $('#envelopeBtn').on('click', function() {
+        // TRICK AUTOPLAY: Browser mengizinkan musik jalan otomatis karena ada klik dari user di tombol ini
+        if (bgMusic.paused) {
+          bgMusic.play().then(() => {
+            musicControl.addClass('playing').html('<i class="fas fa-pause"></i>');
+          }).catch(err => console.log("Autoplay terhambat:", err));
+        }
+
         if (!$(this).hasClass('open')) {
           $(this).addClass('open');
           createParticles();
@@ -1124,19 +1522,163 @@
       $('#marqueeTrack').html(marqueeHtml);
 
       /* ==============================
-         8. FORM HANDLING
+         7.5 POLAROID LIGHTBOX
          ============================== */
+      const lightbox = $('#lightbox');
+      const lightboxImg = $('#lightboxImg');
+      const lightboxCounter = $('#lightboxCounter');
+      let currentLightboxIdx = 0;
+
+      $(document).on('click', '.marquee-item', function(e) {
+        e.preventDefault();
+        const src = $(this).find('img').attr('src');
+        currentLightboxIdx = galleryImages.indexOf(src);
+        if (currentLightboxIdx === -1) currentLightboxIdx = 0;
+        updateLightbox();
+        lightbox.addClass('active');
+      });
+
+      function updateLightbox() {
+        lightboxImg.attr('src', galleryImages[currentLightboxIdx]);
+        lightboxCounter.text((currentLightboxIdx + 1) + ' / ' + galleryImages.length);
+      }
+
+      $('#lightboxClose').on('click', function() {
+        lightbox.removeClass('active');
+      });
+
+      $('#lightboxNext').on('click', function() {
+        currentLightboxIdx = (currentLightboxIdx + 1) % galleryImages.length;
+        updateLightbox();
+      });
+
+      $('#lightboxPrev').on('click', function() {
+        currentLightboxIdx = (currentLightboxIdx - 1 + galleryImages.length) % galleryImages.length;
+        updateLightbox();
+      });
+
+      $(document).keydown(function(e) {
+        if (lightbox.hasClass('active')) {
+          if (e.key === "Escape") lightbox.removeClass('active');
+          if (e.key === "ArrowRight") $('#lightboxNext').click();
+          if (e.key === "ArrowLeft") $('#lightboxPrev').click();
+        }
+      });
+
+      /* ==============================
+         8. FORM HANDLING & GUESTBOOK (LOCAL STORAGE)
+         ============================== */
+      const WISHES_KEY = 'projecthbd-wishes';
+      const SESSION_ID = Math.random().toString(36).substring(2, 15);
+      
+      function getWishes() {
+        return JSON.parse(localStorage.getItem(WISHES_KEY)) || [];
+      }
+      function saveWishes(wishes) {
+        localStorage.setItem(WISHES_KEY, JSON.stringify(wishes));
+      }
+      
+      function renderWishes() {
+        const wishes = getWishes();
+        $('#wishListContainer').empty();
+        wishes.forEach(wish => {
+          // relative time
+          const diffMs = new Date() - new Date(wish.timestamp);
+          const diffMins = Math.floor(diffMs / 60000);
+          const diffHours = Math.floor(diffMins / 60);
+          const diffDays = Math.floor(diffHours / 24);
+          let timeStr = "Baru saja";
+          if(diffDays > 0) timeStr = diffDays + " hari yang lalu";
+          else if(diffHours > 0) timeStr = diffHours + " jam yang lalu";
+          else if(diffMins > 0) timeStr = diffMins + " menit yang lalu";
+
+          const isOwner = wish.sessionId === SESSION_ID;
+          const deleteBtn = isOwner ? `<button class="btn-delete" data-id="${wish.id}" aria-label="Delete"><i class="fas fa-trash"></i></button>` : '';
+          const likedClass = wish.likes > 0 ? 'liked' : '';
+
+          const cardHtml = `
+            <div class="wish-card" id="wish-${wish.id}">
+              <div class="wish-actions">
+                <button class="btn-like ${likedClass}" data-id="${wish.id}" aria-label="Like">
+                  <i class="fas fa-heart"></i> <span>${wish.likes || 0}</span>
+                </button>
+                ${deleteBtn}
+              </div>
+              <div class="wish-header">
+                <div class="wish-avatar" style="background: ${wish.color}; color: #fff;">${wish.name.charAt(0).toUpperCase()}</div>
+                <div class="wish-meta">
+                  <h4>${wish.name}</h4>
+                  <span><i class="far fa-clock"></i> ${timeStr}</span>
+                </div>
+              </div>
+              <div class="wish-message">"${wish.message}"</div>
+            </div>
+          `;
+          $('#wishListContainer').append(cardHtml);
+        });
+      }
+      
+      renderWishes();
+
       $('#wishForm').on('submit', function(e) {
         e.preventDefault();
         const btn = $(this).find('.btn-submit');
         const originalText = btn.html();
+        const nameInput = $(this).find('input[type="text"]').val().trim();
+        const msgInput = $(this).find('textarea').val().trim();
+        if(nameInput === "" || msgInput === "") return;
+
         btn.html('<i class="fas fa-spinner fa-spin"></i> Mengirim...').prop('disabled', true);
+
         setTimeout(function() {
           $('#toast').addClass('show');
-          setTimeout(function() { $('#toast').removeClass('show'); }, 4000);
+          setTimeout(function() { $('#toast').removeClass('show'); }, 3000);
+
+          const c1 = Math.floor(Math.random()*255);
+          const c2 = Math.floor(Math.random()*255);
+          const color = `linear-gradient(135deg, rgba(${c1},${c2},150,1), rgba(150,${c1},${c2},1))`;
+          
+          const newWish = {
+            id: Date.now().toString(),
+            name: nameInput,
+            message: msgInput,
+            timestamp: new Date().toISOString(),
+            color: color,
+            likes: 0,
+            sessionId: SESSION_ID
+          };
+          
+          const wishes = getWishes();
+          wishes.unshift(newWish);
+          if (wishes.length > 50) wishes.pop(); // FIFO limit 50
+          saveWishes(wishes);
+          
+          renderWishes();
+          // Highlight new wish
+          $(`#wish-${newWish.id}`).addClass('new');
+          
           $('#wishForm')[0].reset();
           btn.html(originalText).prop('disabled', false);
-        }, 1500);
+        }, 1000);
+      });
+
+      // Event Delegation for Like & Delete
+      $('#wishListContainer').on('click', '.btn-like', function() {
+        const id = $(this).data('id').toString();
+        const wishes = getWishes();
+        const wish = wishes.find(w => w.id === id);
+        if (wish) {
+          wish.likes = (wish.likes || 0) + 1;
+          saveWishes(wishes);
+          renderWishes();
+        }
+      });
+      $('#wishListContainer').on('click', '.btn-delete', function() {
+        const id = $(this).data('id').toString();
+        let wishes = getWishes();
+        wishes = wishes.filter(w => w.id !== id);
+        saveWishes(wishes);
+        renderWishes();
       });
 
       /* ==============================
@@ -1182,6 +1724,114 @@
         });
         particlesContainer.append(bgP);
       }
+
+      /* ==============================
+         11. VISITOR COUNTER
+         ============================== */
+      function updateVisitorCounter() {
+        const visitors = Math.floor(Math.random() * 8) + 1;
+        $('#visitorCount').text(visitors);
+        const nextUpdate = (Math.floor(Math.random() * 15) + 15) * 1000; // 15-30 seconds
+        setTimeout(updateVisitorCounter, nextUpdate);
+      }
+      updateVisitorCounter();
+
+      /* ==============================
+         12. MEMORY COUNTDOWN
+         ============================== */
+      const targetDate = new Date("July 2, 2026 00:00:00").getTime();
+      const countdownInterval = setInterval(function() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+          clearInterval(countdownInterval);
+          $('#countdownGrid').hide();
+          $('#countdownFinished').show();
+          return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        $('#cd-days').text(days.toString().padStart(2, '0'));
+        $('#cd-hours').text(hours.toString().padStart(2, '0'));
+        $('#cd-minutes').text(minutes.toString().padStart(2, '0'));
+        $('#cd-seconds').text(seconds.toString().padStart(2, '0'));
+      }, 1000);
+
+      /* ==============================
+         13. SECRET MESSAGE (KONAMI CODE)
+         ============================== */
+      const konamiCode = "SATRIA";
+      let konamiIndex = 0;
+      let konamiTimer;
+
+      $(window).on('keydown', function(e) {
+        clearTimeout(konamiTimer);
+        
+        const key = e.key.toUpperCase();
+        if (key === konamiCode[konamiIndex]) {
+          konamiIndex++;
+          if (konamiIndex === konamiCode.length) {
+            // Trigger Easter Egg
+            $('#secret-modal').addClass('active');
+            createConfetti();
+            konamiIndex = 0; // reset
+          }
+        } else {
+          konamiIndex = 0; // reset if wrong key
+        }
+
+        // Reset if idle for 3 seconds
+        konamiTimer = setTimeout(() => { konamiIndex = 0; }, 3000);
+      });
+
+      $('#closeSecretModal, #secret-modal').on('click', function(e) {
+        if (e.target.id === 'closeSecretModal' || e.target.id === 'secret-modal') {
+          $('#secret-modal').removeClass('active');
+        }
+      });
+
+      function createConfetti() {
+        for (let i = 0; i < 50; i++) {
+          const confetti = $('<div class="confetti"></div>');
+          const left = Math.random() * 100 + 'vw';
+          const duration = Math.random() * 2 + 2 + 's';
+          const delay = Math.random() * 2 + 's';
+          const bg = Math.random() > 0.5 ? '#d4af37' : '#ffffff';
+          confetti.css({
+            left: left,
+            animationDuration: duration,
+            animationDelay: delay,
+            background: bg
+          });
+          $('#secret-modal').append(confetti);
+          
+          setTimeout(() => confetti.remove(), 5000);
+        }
+      }
+
+      /* ==============================
+         14. OUR SONG LOGIC
+         ============================== */
+      $('#btnPlayOurSong').on('click', function() {
+        loadSong('santai', 0);
+        playMusic();
+      });
+
+      $('#btnShowLyrics').on('click', function() {
+        $('#lyrics-modal').addClass('active');
+      });
+
+      $('#closeLyricsModal, #lyrics-modal').on('click', function(e) {
+        if (e.target.id === 'closeLyricsModal' || e.target.id === 'lyrics-modal') {
+          $('#lyrics-modal').removeClass('active');
+        }
+      });
+
     });
   </script>
 </body>
